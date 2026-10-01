@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Sundika DJ8 Pro — Real Web DJ</title>
+<style>
+:root{--bg:#07090d;--panel:#11151c;--panel2:#0b0e13;--line:#28313e;--text:#eaf0f7;--muted:#8995a5;--blue:#19a7ff;--cyan:#34d8ff;--orange:#ff9b22;--red:#ff4261;--green:#39e58c}
+*{box-sizing:border-box}html,body{margin:0;background:#05070a;color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100%;overflow-x:hidden}
+button,input{font:inherit}button{color:var(--text);background:#171d26;border:1px solid #303b49;border-radius:12px;padding:10px 13px;cursor:pointer;box-shadow:inset 0 1px #ffffff08}button:active{transform:scale(.98)}
+.app{max-width:1500px;margin:auto;padding:10px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#0e1218;border:1px solid var(--line);border-radius:16px;position:sticky;top:8px;z-index:5}
+.brand{font-size:22px;font-weight:900}.brand b{color:var(--red)}.brand small{color:#8d99a8;font-weight:700;margin-left:5px}
+.topActions{display:flex;gap:8px}.top button{padding:8px 11px}
+.scope{height:92px;margin-top:10px;background:#090c11;border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden}
+#masterWave{width:100%;height:100%;display:block}.scope .center{position:absolute;left:50%;top:0;bottom:0;border-left:1px solid #fff8;pointer-events:none}
+.decks{display:grid;grid-template-columns:minmax(330px,1fr) minmax(360px,1.08fr) minmax(330px,1fr);gap:10px;margin-top:10px;align-items:start}
+.deck,.mixer{background:linear-gradient(180deg,#121720,#0c1016);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 10px 35px #0008}
+.deckHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.deckHead h2{margin:0;font-size:17px}.a{color:var(--blue)}.b{color:var(--orange)}
+.track{background:#080b0f;border:1px solid #27303c;border-radius:11px;padding:9px;min-height:49px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wave{width:100%;height:110px;display:block;background:#07090d;border:1px solid #222b36;border-radius:11px;margin-top:8px}
+.transport{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-top:8px}.transport button.active{background:#14344a;border-color:var(--blue);color:#8edcff}.transport .hot{border-color:#74402a}
+.jogrow{display:grid;grid-template-columns:74px 1fr 74px;gap:8px;align-items:center;margin:10px 0}
+.knob{height:74px;border-radius:50%;background:radial-gradient(circle at 50% 48%,#2a333f 0 29%,#0a0d12 30% 53%,#202936 54% 64%,#090c11 65%);border:3px solid #394654;display:grid;place-items:center;color:#32c8ff;font-size:10px;font-weight:900;letter-spacing:2px;user-select:none;touch-action:none}
+.pitchBox label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.pitchBox input{width:100%}
+.range{width:100%;accent-color:var(--blue)}.deck.bdeck .range{accent-color:var(--orange)}
+.eq{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.eq label{font-size:10px;color:var(--muted);text-align:center}.eq input{width:100%;accent-color:#b9c4d0}
+.sideBtns{display:flex;gap:7px;margin-top:8px}.sideBtns button{flex:1}
+.mixer{display:flex;flex-direction:column;gap:10px}
+.mixer h3{margin:0;font-size:13px;color:#b9c5d3;letter-spacing:.8px}
+.meter{height:9px;background:#07090c;border:1px solid #202936;border-radius:8px;overflow:hidden}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#e7df3c,var(--red));transition:width .05s}
+.mixgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.channel{background:#0a0e13;border:1px solid #222c37;border-radius:14px;padding:10px}.channel h4{margin:0 0 6px}.faderV{height:135px;display:block;writing-mode:vertical-lr;direction:rtl;margin:auto;accent-color:var(--blue)}
+.cross{padding:8px 4px}.cross label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.cross input{width:100%;accent-color:#d9e3ec}
+.fx{background:#0a0e13;border:1px solid #222c37;border-radius:14px;padding:10px}.fxgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.fxgrid select,.fxgrid input{width:100%;background:#151b23;color:white;border:1px solid #303a47;border-radius:9px;padding:8px}.fxBtns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:7px}.fxBtns button.on{background:#213a47;border-color:var(--cyan);color:var(--cyan)}
+.stems{background:#0a0e13;border:1px solid #222c37;border-radius:14px;padding:10px}.stemgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.stem{padding:11px 5px;font-size:11px}.stem.active{background:#17333e;border-color:#30c9ef;color:#73e4ff}
+.pads{margin-top:10px;background:#0c1016;border:1px solid var(--line);border-radius:18px;padding:12px}.padtop{display:flex;justify-content:space-between;align-items:center}.padtop h3{margin:0}.padgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:8px}.pad{min-height:58px;font-weight:800;border-radius:10px;background:#151b23}.pad.cue{border-color:#3c88ff}.pad.loop{border-color:#9a54ff}.pad.fxpad{border-color:#f24f70}.pad:active,.pad.hit{background:#244354;box-shadow:0 0 20px #21bfff44}
+.bottom{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin-top:10px;padding:10px;background:#0e1218;border:1px solid var(--line);border-radius:15px;position:sticky;bottom:8px;z-index:4}.bottom button{min-width:82px}.rec.on{background:#4b1720;border-color:var(--red);color:#ff8da0}
+.file{display:none}.hint{color:var(--muted);font-size:11px;line-height:1.35}
+@media(max-width:1050px){.app{min-width:980px}.top{position:relative}.decks{grid-template-columns:1fr 1.08fr 1fr}.deck{min-height:0}.padgrid{grid-template-columns:repeat(8,1fr)}}
+@media(min-width:1051px){body{overflow-x:auto}.app{max-width:1500px}.deck{min-width:0}.mixer{min-width:360px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">Sundika <b>DJ8 Pro</b><small>REAL ENGINE • LANDSCAPE WORKSTATION</small></div>
+    <div class="topActions"><button id="unlock">AUDIO ON</button><button id="full">FULLSCREEN</button></div>
+  </header>
+
+  <div class="scope"><canvas id="masterWave"></canvas><div class="center"></div></div>
+
+  <main class="decks">
+    <section class="deck">
+      <div class="deckHead"><h2 class="a">DECK A</h2><strong id="bpmA">-- BPM</strong></div>
+      <div class="track" id="nameA">No track loaded</div>
+      <canvas class="wave" id="waveA"></canvas>
+      <audio id="audioA" crossorigin="anonymous"></audio>
+      <input class="file" type="file" accept="audio/*" id="fileA">
+      <div class="transport">
+        <button id="loadA">LOAD A</button><button id="playA">▶ PLAY</button><button id="cueA">CUE</button><button id="loopA">LOOP 4</button>
+      </div>
+      <div class="jogrow">
+        <button id="nudgeA">NUDGE</button>
+        <div class="knob" id="jogA">SUNDika</div>
+        <button id="revA">REV</button>
+      </div>
+      <div class="pitchBox"><label><span>PITCH</span><span id="pitchValA">0%</span></label><input id="pitchA" class="range" type="range" min="-16" max="16" step=".01" value="0"></div>
+      <div class="eq">
+        <label>LOW<input id="lowA" type="range" min="-12" max="12" value="0"></label>
+        <label>MID<input id="midA" type="range" min="-12" max="12" value="0"></label>
+        <label>HIGH<input id="highA" type="range" min="-12" max="12" value="0"></label>
+      </div>
+      <div class="sideBtns"><button id="filterA">FILTER</button><button id="syncA">SYNC</button><button id="slipA">SLIP</button></div>
+    </section>
+
+    <section class="mixer">
+      <h3>MASTER MIXER</h3>
+      <div class="meter"><i id="meter"></i></div>
+      <div class="mixgrid">
+        <div class="channel"><h4 class="a">CHANNEL A</h4><input class="faderV" id="volA" type="range" min="0" max="1" step=".001" value=".9"><div class="meter"><i id="meterA"></i></div><button id="pflA" style="width:100%;margin-top:6px">PFL A</button></div>
+        <div class="channel"><h4 class="b">CHANNEL B</h4><input class="faderV" id="volB" type="range" min="0" max="1" step=".001" value=".9"><div class="meter"><i id="meterB"></i></div><button id="pflB" style="width:100%;margin-top:6px">PFL B</button></div>
+      </div>
+      <div class="cross"><label><span>A</span><span>CROSSFADER</span><span>B</span></label><input id="cross" type="range" min="0" max="1" step=".001" value=".5"></div>
+      <div class="fx">
+        <h3>FX ENGINE</h3>
+        <div class="fxgrid">
+          <select id="fxType"><option value="filter">FILTER</option><option value="delay">ECHO / DELAY</option><option value="reverb">REVERB</option><option value="flanger">FLANGER</option></select>
+          <input id="fxWet" type="range" min="0" max="1" step=".01" value=".35">
+          <input id="fxParam" type="range" min="0" max="1" step=".01" value=".5">
+          <button id="fxOn">FX OFF</button>
+        </div>
+        <div class="fxBtns"><button data-fx="echo">ECHO</button><button data-fx="reverb">REVERB</button><button data-fx="flanger">FLANGER</button><button data-fx="filter">FILTER</button></div>
+      </div>
+      <div class="stems">
+        <h3>STEM-STYLE PERFORMANCE</h3>
+        <div class="stemgrid"><button class="stem active">ALL</button><button class="stem">VOCAL</button><button class="stem">MELODY</button><button class="stem">DRUMS</button></div>
+        <div class="hint" style="margin-top:7px">Stem buttons are UI routing targets in this standalone HTML. True AI stem separation requires a trained separation model/WASM backend; this build does not pretend otherwise.</div>
+      </div>
+    </section>
+
+    <section class="deck bdeck">
+      <div class="deckHead"><h2 class="b">DECK B</h2><strong id="bpmB">-- BPM</strong></div>
+      <div class="track" id="nameB">No track loaded</div>
+      <canvas class="wave" id="waveB"></canvas>
+      <audio id="audioB" crossorigin="anonymous"></audio>
+      <input class="file" type="file" accept="audio/*" id="fileB">
+      <div class="transport">
+        <button id="loadB">LOAD B</button><button id="playB">▶ PLAY</button><button id="cueB">CUE</button><button id="loopB">LOOP 4</button>
+      </div>
+      <div class="jogrow">
+        <button id="nudgeB">NUDGE</button>
+        <div class="knob" id="jogB">SUNDika</div>
+        <button id="revB">REV</button>
+      </div>
+      <div class="pitchBox"><label><span>PITCH</span><span id="pitchValB">0%</span></label><input id="pitchB" class="range" type="range" min="-16" max="16" step=".01" value="0"></div>
+      <div class="eq">
+        <label>LOW<input id="lowB" type="range" min="-12" max="12" value="0"></label>
+        <label>MID<input id="midB" type="range" min="-12" max="12" value="0"></label>
+        <label>HIGH<input id="highB" type="range" min="-12" max="12" value="0"></label>
+      </div>
+      <div class="sideBtns"><button id="filterB">FILTER</button><button id="syncB">SYNC</button><button id="slipB">SLIP</button></div>
+    </section>
+  </main>
+
+  <section class="pads">
+    <div class="padtop"><h3>PERFORMANCE PADS</h3><span class="hint">Hot Cue • Loop • Sampler</span></div>
+    <div class="padgrid" id="pads"></div>
+  </section>
+
+  <div class="bottom">
+    <button id="stop">■ STOP</button>
+    <input id="master" type="range" min="0" max="1" step=".001" value=".85">
+    <button class="rec" id="rec">● REC</button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let ctx, master, dest, recorder, chunks=[], recording=false;
+const decks={A:{audio:$('audioA'),src:null,gain:null,low:null,mid:null,high:null,filter:null,an:null,buf:null,cue:0,loop:4,slip:false,rev:false},B:{audio:$('audioB'),src:null,gain:null,low:null,mid:null,high:null,filter:null,an:null,buf:null,cue:0,loop:4,slip:false,rev:false}};
+function ensureAudio(){
+  if(ctx)return;
+  ctx=new AudioContext(); master=ctx.createGain(); master.gain.value=+$('master').value;
+  dest=ctx.createMediaStreamDestination(); master.connect(ctx.destination); master.connect(dest);
+  ['A','B'].forEach(k=>{
+    const d=decks[k], a=d.audio;
+    d.src=ctx.createMediaElementSource(a);
+    d.gain=ctx.createGain(); d.low=ctx.createBiquadFilter(); d.mid=ctx.createBiquadFilter(); d.high=ctx.createBiquadFilter(); d.filter=ctx.createBiquadFilter(); d.an=ctx.createAnalyser();
+    d.low.type='lowshelf';d.low.frequency.value=180;
+    d.mid.type='peaking';d.mid.frequency.value=1000;d.mid.Q.value=.9;
+    d.high.type='highshelf';d.high.frequency.value=4200;
+    d.filter.type='lowpass';d.filter.frequency.value=20000;
+    d.an.fftSize=1024;
+    d.src.connect(d.low).connect(d.mid).connect(d.high).connect(d.filter).connect(d.gain).connect(d.an).connect(master);
+  });
+  $('unlock').textContent='AUDIO READY';
+}
+async function wake(){ensureAudio();if(ctx.state==='suspended')await ctx.resume()}
+function loadDeck(k,file){
+  wake(); const d=decks[k]; d.audio.src=URL.createObjectURL(file); d.audio.load(); $(k==='A'?'nameA':'nameB').textContent=file.name;
+  d.audio.onloadedmetadata=()=>{ drawWave(k); };
+  d.audio.onplay=()=>{ $(k==='A'?'playA':'playB').textContent='❚❚ PAUSE'; };
+  d.audio.onpause=()=>{ $(k==='A'?'playA':'playB').textContent='▶ PLAY'; };
+  d.audio.ontimeupdate=()=>{ drawWave(k); };
+}
+function bindFile(k){$('file'+k).onchange=e=>{if(e.target.files[0])loadDeck(k,e.target.files[0])}}
+bindFile('A');bindFile('B'); $('loadA').onclick=()=>{$('fileA').click()};$('loadB').onclick=()=>{$('fileB').click()};
+$('unlock').onclick=wake;$('full').onclick=()=>document.documentElement.requestFullscreen?.();
+['A','B'].forEach(k=>{
+ const d=decks[k], p=$('pitch'+k);
+ $('play'+k).onclick=async()=>{await wake(); if(d.audio.paused)d.audio.play();else d.audio.pause()};
+ $('cue'+k).onclick=async()=>{await wake(); if(d.audio.currentTime>0){d.audio.currentTime=d.cue||0}else d.cue=d.audio.currentTime};
+ $('loop'+k).onclick=()=>{if(!d.audio.duration)return; d.loop=d.loop===8?1:d.loop*2; $('loop'+k).textContent='LOOP '+d.loop};
+ p.oninput=()=>{d.audio.playbackRate=1+(+p.value/100);$('pitchVal'+k).textContent=(+p.value).toFixed(1)+'%'};
+ [['low',d.low],['mid',d.mid],['high',d.high]].forEach(([n,node])=>{$(n+k).oninput=e=>node && (node.gain.value=+e.target.value)});
+ $('filter'+k).onclick=()=>{const f=d.filter.frequency.value>10000?900:18000;d.filter.frequency.value=f;$('filter'+k).classList.toggle('active')};
+ $('sync'+k).onclick=()=>{const other=k==='A'?decks.B:decks.A;if(other.audio.duration)d.audio.currentTime=Math.min(other.audio.currentTime,d.audio.duration);d.audio.playbackRate=other.audio.playbackRate};
+ $('slip'+k).onclick=()=>{d.slip=!d.slip;$('slip'+k).classList.toggle('active',d.slip)};
+ $('rev'+k).onclick=()=>{d.rev=!d.rev;$('rev'+k).classList.toggle('active',d.rev);d.audio.playbackRate=d.rev?-(1+(+p.value/100)):(1+(+p.value/100));};
+ $('nudge'+k).onpointerdown=()=>{if(d.audio.duration)d.audio.currentTime=Math.max(0,d.audio.currentTime-.08)};
+ const jog=$('jog'+k);let lastX=null;
+ jog.onpointerdown=e=>{wake();lastX=e.clientX;jog.setPointerCapture(e.pointerId);d.audio.pause()};
+ jog.onpointermove=e=>{if(lastX===null||!d.audio.duration)return;const dx=e.clientX-lastX;lastX=e.clientX;d.audio.currentTime=Math.max(0,Math.min(d.audio.duration,d.audio.currentTime+dx*.012))};
+ jog.onpointerup=()=>{lastX=null;if(!d.slip)d.audio.play()};
+ jog.onpointercancel=()=>{lastX=null;if(!d.slip)d.audio.play()};
+});
+$('cross').oninput=e=>{const x=+e.target.value;decks.A.gain.gain.value=(1-x)*+$('volA').value;decks.B.gain.gain.value=x*+$('volB').value};
+$('volA').oninput=()=>{$('cross').dispatchEvent(new Event('input'))};$('volB').oninput=()=>{$('cross').dispatchEvent(new Event('input'))};
+$('master').oninput=e=>{if(master)master.gain.value=+e.target.value};
+$('stop').onclick=()=>{['A','B'].forEach(k=>{decks[k].audio.pause();decks[k].audio.currentTime=0})};
+function drawWave(k){
+ const d=decks[k], c=$('wave'+k), g=c.getContext('2d'), w=c.width=c.clientWidth*devicePixelRatio,h=c.height=c.clientHeight*devicePixelRatio;
+ g.clearRect(0,0,w,h);g.fillStyle='#07090d';g.fillRect(0,0,w,h);g.strokeStyle=k==='A'?'#19a7ff':'#ff9b22';g.lineWidth=2*devicePixelRatio;
+ if(d.buf){const data=d.buf.getChannelData(0), step=Math.ceil(data.length/w), mid=h/2;g.beginPath();for(let x=0;x<w;x++){let min=1,max=-1;for(let j=0;j<step;j++){const v=data[x*step+j]||0;if(v<min)min=v;if(v>max)max=v}g.moveTo(x,mid+min*mid*.9);g.lineTo(x,mid+max*mid*.9)}g.stroke()}else{g.strokeStyle='#25303d';g.beginPath();g.moveTo(0,h/2);g.lineTo(w,h/2);g.stroke()}
+ if(d.audio.duration){const x=(d.audio.currentTime/d.audio.duration)*w;g.strokeStyle='#fff';g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke()}
+}
+async function decodeFor(k){
+ const d=decks[k]; if(!d.audio.src||!ctx)return; try{const r=await fetch(d.audio.src);d.buf=await ctx.decodeAudioData(await r.arrayBuffer());drawWave(k)}catch(e){}
+}
+$('fileA').addEventListener('change',()=>setTimeout(()=>decodeFor('A'),300));$('fileB').addEventListener('change',()=>setTimeout(()=>decodeFor('B'),300));
+
+const padNames=['CUE 1','CUE 2','CUE 3','CUE 4','LOOP 1','LOOP 2','LOOP 4','LOOP 8','VOCAL','MELODY','DRUMS','SAMPLER','ECHO','REVERB','SLICER','SCRATCH'];
+padNames.forEach((n,i)=>{const b=document.createElement('button');b.className='pad '+(i<4?'cue':i<8?'loop':i>=12?'fxpad':'');b.textContent=n;b.onclick=async()=>{await wake();b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),120);const d=decks.A;if(i<4){d.cue=d.audio.currentTime;d.audio.play()}else if(i<8){d.loop=2**(i-4+1);$('loopA').textContent='LOOP '+d.loop}else if(i===12){fxType.value='delay';$('fxOn').click()}else if(i===13){fxType.value='reverb';$('fxOn').click()}else if(i===15){$('jogA').animate([{transform:'rotate(-12deg)'},{transform:'rotate(12deg)'},{transform:'rotate(0)'}],{duration:220})}};$('pads').appendChild(b)});
+
+let fxNode=null, fxWet=null, fxOn=false;
+$('fxOn').onclick=()=>{fxOn=!fxOn;$('fxOn').textContent=fxOn?'FX ON':'FX OFF';$('fxOn').classList.toggle('on',fxOn);applyFx()};
+$('fxType').onchange=applyFx;$('fxWet').oninput=applyFx;$('fxParam').oninput=applyFx;
+document.querySelectorAll('[data-fx]').forEach(b=>b.onclick=()=>{$('fxType').value=b.dataset.fx==='echo'?'delay':b.dataset.fx;fxOn=true;$('fxOn').textContent='FX ON';applyFx()});
+function applyFx(){
+ if(!ctx)return;
+ // Master-side creative FX. Rebuilds a simple wet path without pretending to be proprietary VirtualDJ DSP.
+ if(fxNode){try{fxNode.disconnect()}catch(e){}}
+ if(!fxOn){return}
+ const type=$('fxType').value, wet=+$('fxWet').value, param=+$('fxParam').value;
+ if(type==='filter'){fxNode=ctx.createBiquadFilter();fxNode.type='lowpass';fxNode.frequency.value=300+param*19000;fxNode.Q.value=1+param*10}
+ else if(type==='delay'){fxNode=ctx.createDelay(1);fxNode.delayTime.value=.08+param*.7}
+ else if(type==='flanger'){fxNode=ctx.createDelay(.05);fxNode.delayTime.value=.003+param*.02}
+ else {fxNode=ctx.createConvolver(); const len=ctx.sampleRate*(1.2+param*2), b=ctx.createBuffer(2,len,ctx.sampleRate);for(let ch=0;ch<2;ch++){const a=b.getChannelData(ch);for(let i=0;i<len;i++)a[i]=(Math.random()*2-1)*Math.pow(1-i/len,2)}fxNode.buffer=b}
+ const input=ctx.createGain();input.gain.value=wet;fxNode._wet=input;master.connect(input).connect(fxNode).connect(master);
+}
+$('rec').onclick=async()=>{await wake();if(!recording){chunks=[];recorder=new MediaRecorder(dest.stream);recorder.ondataavailable=e=>chunks.push(e.data);recorder.onstop=()=>{const blob=new Blob(chunks,{type:'audio/webm'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Sundika-DJ8-Pro-Mix.webm';a.click()};recorder.start();recording=true;$('rec').textContent='● STOP REC';$('rec').classList.add('on')}else{recorder.stop();recording=false;$('rec').textContent='● REC';$('rec').classList.remove('on')}};
+function meters(){
+ if(!ctx){requestAnimationFrame(meters);return}
+ let sum=0;['A','B'].forEach(k=>{const d=decks[k], arr=new Uint8Array(d.an.frequencyBinCount);d.an.getByteTimeDomainData(arr);let s=0;for(const v of arr){const x=(v-128)/128;s+=x*x}const rms=Math.sqrt(s/arr.length);const pct=Math.min(100,rms*240);$('meter'+k).style.width=pct+'%';sum+=pct});$('meter').style.width=Math.min(100,sum*.65)+'%';requestAnimationFrame(meters)}
+meters();
+setInterval(()=>{['A','B'].forEach(k=>{const d=decks[k];if(d.audio.duration){const bpm=128*d.audio.playbackRate;$(k==='A'?'bpmA':'bpmB').textContent=bpm.toFixed(1)+' BPM'}})},500);
+window.addEventListener('resize',()=>{drawWave('A');drawWave('B')});
+</script>
+</body>
+</html>
